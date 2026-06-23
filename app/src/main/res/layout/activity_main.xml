@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vagas por Região"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:textColor="#333"/>
+
+        <Button
+            android:id="@+id/btnRegiaoGaranhuns"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Região Garanhuns"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#10b981"/>
+
+        <Button
+            android:id="@+id/btnRegiaoBomComselho"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Região Bom Conselho"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#10b981"/>
+
+        <Button
+            android:id="@+id/btnRegiaoArcoverde"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Região Arcoverde"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#10b981"/>
+
+        <Button
+            android:id="@+id/btnRegiaoPesqueira"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Região Pesqueira"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#10b981"/>
+
+        <Button
+            android:id="@+id/btnRegiaoAguaBelas"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="Região Aguas Belas"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#10b981"/>
+
+    </LinearLayout>
+</ScrollView>
