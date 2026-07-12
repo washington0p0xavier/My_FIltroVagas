@@ -1,6 +1,5 @@
 package com.example.my_filtrovagas;
 
-<<<<<<< HEAD
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,30 +15,19 @@ import com.controller.PdfProcessor;
 import com.controller.WebScraper;
 
 
-=======
-import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
-
-// Importe a classe que criamos. Ajuste o caminho se necessário.
-import com.controller.WebScraper;
-import com.example.my_filtrovagas.R;
->>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
         setContentView(R.layout.activity_main);
 
         // 1. Configura o clique do botão da Ala Garanhuns
         findViewById(R.id.btnRegiaoGaranhuns).setOnClickListener(v -> {
             String[] cidadesRegiaoGaranhuns = {
-                "GARANHUNS", "SÃO JOÃO", "BREJÃO", "PARANATAMA", "CAETÉS", 
-                "JUCATI", "JUPI", "ANGELIM", "CAPOEIRAS", "SALOÁ", 
+                "GARANHUNS", "SÃO JOÃO", "BREJÃO", "PARANATAMA", "CAETÉS",
+                "JUCATI", "JUPI", "ANGELIM", "CAPOEIRAS", "SALOÁ",
                 "TEREZINHA", "CALÇADO", "LAGOA DO OURO"
             };
             executarAutomacao("Região Garanhuns", cidadesRegiaoGaranhuns);
@@ -48,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         // 2. Configura o clique do botão da Ala Bom Conselho
         findViewById(R.id.btnRegiaoBomComselho).setOnClickListener(v -> {
             String[] cidadesRegiaoBomConselho = {
-                "BOM CONSELHO", "TEREZINHA", "BREJÃO", "LAGOA DO OURO", 
+                "BOM CONSELHO", "TEREZINHA", "BREJÃO", "LAGOA DO OURO",
                 "SALOÁ", "IATI", "PALMEIRA DOS ÍNDIOS"
             };
             executarAutomacao("Região Bom Conselho", cidadesRegiaoBomConselho);
@@ -122,19 +110,19 @@ public class MainActivity extends AppCompatActivity {
                                     for (String cidade : cidadesAlvo) {
                                         String cidadeMaiuscula = cidade.toUpperCase();
                                         if (linhaMaiuscula.contains(cidadeMaiuscula)) {
-                                            
+
                                             if (!agrupamentoPorCidade.containsKey(cidadeMaiuscula)) {
                                                 agrupamentoPorCidade.put(cidadeMaiuscula, new StringBuilder());
                                             }
-                                            
+
                                             String vagaFormatada = formatarLinhaVaga(linhaLimpa, cidadeMaiuscula);
-                                            
+
                                             // Só adiciona se a linha realmente contiver uma vaga (não for uma linha fantasma)
                                             if (!vagaFormatada.isEmpty()) {
                                                 agrupamentoPorCidade.get(cidadeMaiuscula).append(vagaFormatada).append("\n");
                                                 encontrouVaga = true;
                                             }
-                                            break; 
+                                            break;
                                         }
                                     }
                                 }
@@ -164,55 +152,19 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("AppVagas", "Erro no PDF para " + nomeRegiao + ": " + e.getMessage());
                             Toast.makeText(MainActivity.this, "Erro ao processar o arquivo PDF.", Toast.LENGTH_SHORT).show();
                         });
-=======
-
-        // Carrega o visual da tela (onde está o Hello World)
-        setContentView(R.layout.activity_main);
-
-        // A URL que você forneceu
-        String urlAlvo = "https://www.sedepe.pe.gov.br/vaga-de-emprego/";
-
-        // Avisa que a busca começou
-        Toast.makeText(this, "Buscando vagas no site...", Toast.LENGTH_SHORT).show();
-
-        // Chama o nosso motor de busca passando o site da SEDEPE
-        WebScraper.findPdfLink(urlAlvo, new WebScraper.ScraperCallback() {
-            @Override
-            public void onLinkFound(String pdfUrl) {
-                // O Android exige que mensagens na tela sejam chamadas na linha principal
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Imprime o link no console de desenvolvedor
-                        Log.i("AppVagas", "PDF Encontrado: " + pdfUrl);
-
-                        // Mostra o link na tela do celular
-                        Toast.makeText(MainActivity.this, "Sucesso! Link capturado", Toast.LENGTH_LONG).show();
->>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
                     }
                 });
             }
 
             @Override
-<<<<<<< HEAD
             public void onError(final Exception e) {
                 runOnUiThread(() -> {
                     Log.e("AppVagas", "Erro no site para " + nomeRegiao + ": " + e.getMessage());
                     Toast.makeText(MainActivity.this, "Erro de conexão com o site da SEDEPE.", Toast.LENGTH_SHORT).show();
-=======
-            public void onError(Exception e) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.e("AppVagas", "Erro: " + e.getMessage());
-                        Toast.makeText(MainActivity.this, "Aviso: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
->>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
                 });
             }
         });
     }
-<<<<<<< HEAD
 
     /**
      * Formata uma linha bruta do PDF para o padrão:
@@ -222,11 +174,11 @@ public class MainActivity extends AppCompatActivity {
         // 1. Limpeza inicial de múltiplos espaços para um separador padrão
         // Aqui usamos a lógica de que 2 ou mais espaços representam uma troca de coluna no PDF
         String tratada = linha.replaceAll("\\s{2,}", " - ");
-        
+
         // 2. Tenta extrair o número de vagas que costuma vir no início da linha (ex: "1 ENGENHEIRO")
         String numVagas = "1"; // Valor padrão caso não encontre
         String cargoRestante = tratada;
-        
+
         // Expressão regular para pegar o primeiro número no início da linha
         if (tratada.matches("^\\d+.*")) {
             String[] partes = tratada.split(" ", 2);
@@ -235,18 +187,18 @@ public class MainActivity extends AppCompatActivity {
                 cargoRestante = partes[1];
             }
         }
-        
+
         // 3. Monta a string final com emojis e o formato solicitado
         StringBuilder sb = new StringBuilder();
-        
+
         // Transforma o restante em maiúsculo e garante que a cidade tenha os separadores corretos
         String resultado = cargoRestante.toUpperCase();
-        
+
         // Se a cidade estiver "grudada", garante o separador
         if (resultado.contains(cidade) && !resultado.contains(" - " + cidade + " - ")) {
             resultado = resultado.replace(cidade, " - " + cidade + " - ");
         }
-        
+
         // Limpezas de traços e espaços
         resultado = resultado.replace(" -  - ", " - ");
         resultado = resultado.replace(" - - ", " - ");
@@ -263,10 +215,10 @@ public class MainActivity extends AppCompatActivity {
 
         sb.append("➡️ Nº VAGAS: ").append(numVagas).append(" - ");
         sb.append(resultado);
-        
+
         // 4. Adiciona "EXPERIÊNCIA:" e evita a repetição do número
         String finalStr = sb.toString().trim().replaceAll(" - $", "");
-        
+
         if (finalStr.matches(".*\\d+ MESES$") && !finalStr.contains("EXPERIÊNCIA")) {
              String ultimoNum = extractLastNumber(finalStr);
              // Remove o número solto que ficaria antes de "EXPERIÊNCIA"
@@ -294,6 +246,3 @@ public class MainActivity extends AppCompatActivity {
         return "";
     }
 }
-=======
-}
->>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
