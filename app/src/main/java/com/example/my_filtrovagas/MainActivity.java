@@ -1,5 +1,6 @@
 package com.example.my_filtrovagas;
 
+<<<<<<< HEAD
 
 import android.os.Bundle;
 import android.util.Log;
@@ -15,12 +16,23 @@ import com.controller.PdfProcessor;
 import com.controller.WebScraper;
 
 
+=======
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+
+// Importe a classe que criamos. Ajuste o caminho se necessário.
+import com.controller.WebScraper;
+import com.example.my_filtrovagas.R;
+>>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+<<<<<<< HEAD
         setContentView(R.layout.activity_main);
 
         // 1. Configura o clique do botão da Ala Garanhuns
@@ -152,19 +164,55 @@ public class MainActivity extends AppCompatActivity {
                             Log.e("AppVagas", "Erro no PDF para " + nomeRegiao + ": " + e.getMessage());
                             Toast.makeText(MainActivity.this, "Erro ao processar o arquivo PDF.", Toast.LENGTH_SHORT).show();
                         });
+=======
+
+        // Carrega o visual da tela (onde está o Hello World)
+        setContentView(R.layout.activity_main);
+
+        // A URL que você forneceu
+        String urlAlvo = "https://www.sedepe.pe.gov.br/vaga-de-emprego/";
+
+        // Avisa que a busca começou
+        Toast.makeText(this, "Buscando vagas no site...", Toast.LENGTH_SHORT).show();
+
+        // Chama o nosso motor de busca passando o site da SEDEPE
+        WebScraper.findPdfLink(urlAlvo, new WebScraper.ScraperCallback() {
+            @Override
+            public void onLinkFound(String pdfUrl) {
+                // O Android exige que mensagens na tela sejam chamadas na linha principal
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Imprime o link no console de desenvolvedor
+                        Log.i("AppVagas", "PDF Encontrado: " + pdfUrl);
+
+                        // Mostra o link na tela do celular
+                        Toast.makeText(MainActivity.this, "Sucesso! Link capturado", Toast.LENGTH_LONG).show();
+>>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
                     }
                 });
             }
 
             @Override
+<<<<<<< HEAD
             public void onError(final Exception e) {
                 runOnUiThread(() -> {
                     Log.e("AppVagas", "Erro no site para " + nomeRegiao + ": " + e.getMessage());
                     Toast.makeText(MainActivity.this, "Erro de conexão com o site da SEDEPE.", Toast.LENGTH_SHORT).show();
+=======
+            public void onError(Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("AppVagas", "Erro: " + e.getMessage());
+                        Toast.makeText(MainActivity.this, "Aviso: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+>>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
                 });
             }
         });
     }
+<<<<<<< HEAD
 
     /**
      * Formata uma linha bruta do PDF para o padrão:
@@ -246,3 +294,6 @@ public class MainActivity extends AppCompatActivity {
         return "";
     }
 }
+=======
+}
+>>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
