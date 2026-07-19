@@ -1,85 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#F0F2F5">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Cabeçalho -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filtro de Vagas"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="#1A73E8"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selecione uma região para buscar"
+                android:textSize="14sp"
+                android:textColor="#5F6368"
+                android:layout_gravity="center"
+                android:layout_marginBottom="32dp"/>
+
+            <!-- Card Garanhuns -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFF"
+                app:rippleColor="#201A73E8">
+
+                <LinearLayout
+                    android:id="@+id/btnRegiaoGaranhuns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@android:drawable/ic_dialog_map"
+                        app:tint="#1A73E8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Região Garanhuns"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:textColor="#202124"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card Bom Conselho -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:id="@+id/btnRegiaoBomComselho"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@android:drawable/ic_dialog_map"
+                        app:tint="#1A73E8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Região Bom Conselho"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:textColor="#202124"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card Arcoverde -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:id="@+id/btnRegiaoArcoverde"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@android:drawable/ic_dialog_map"
+                        app:tint="#1A73E8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Região Arcoverde"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:textColor="#202124"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card Pesqueira -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:id="@+id/btnRegiaoPesqueira"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@android:drawable/ic_dialog_map"
+                        app:tint="#1A73E8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Região Pesqueira"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:textColor="#202124"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card Águas Belas -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:id="@+id/btnRegiaoAguaBelas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@android:drawable/ic_dialog_map"
+                        app:tint="#1A73E8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Região Águas Belas"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:textColor="#202124"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Overlay de Carregamento -->
+    <LinearLayout
+        android:id="@+id/layoutLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80FFFFFF"
+        android:gravity="center"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ProgressBar
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:indeterminateTint="#1A73E8"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vagas por Região"
-            android:textSize="24sp"
+            android:layout_marginTop="16dp"
+            android:text="Buscando vagas..."
+            android:textColor="#1A73E8"
             android:textStyle="bold"
-            android:layout_gravity="center"
-            android:layout_marginBottom="20dp"
-            android:textColor="#333"/>
-
-        <Button
-            android:id="@+id/btnRegiaoGaranhuns"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="Região Garanhuns"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#10b981"/>
-
-        <Button
-            android:id="@+id/btnRegiaoBomComselho"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="Região Bom Conselho"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#10b981"/>
-
-        <Button
-            android:id="@+id/btnRegiaoArcoverde"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="Região Arcoverde"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#10b981"/>
-
-        <Button
-            android:id="@+id/btnRegiaoPesqueira"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="Região Pesqueira"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#10b981"/>
-
-        <Button
-            android:id="@+id/btnRegiaoAguaBelas"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="Região Aguas Belas"
-            android:layout_marginBottom="10dp"
-            android:backgroundTint="#10b981"/>
-
+            android:textSize="16sp"/>
     </LinearLayout>
-</ScrollView>
-=======
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
->>>>>>> ce6789f54de442fdafb897a30f8b2a4d98e979db
+</RelativeLayout>

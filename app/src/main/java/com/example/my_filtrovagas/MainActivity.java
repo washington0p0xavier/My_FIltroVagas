@@ -3,6 +3,8 @@ package com.example.my_filtrovagas;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -18,10 +20,14 @@ import com.controller.WebScraper;
 
 public class MainActivity extends AppCompatActivity {
 
+    private LinearLayout layoutLoading;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        layoutLoading = findViewById(R.id.layoutLoading);
 
         // 1. Configura o clique do botão da Ala Garanhuns
         findViewById(R.id.btnRegiaoGaranhuns).setOnClickListener(v -> {
@@ -74,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void executarAutomacao(final String nomeRegiao, final String[] cidadesAlvo) {
         String urlAlvo = "https://www.sedepe.pe.gov.br/vaga-de-emprego/";
-        Toast.makeText(this, "Iniciando busca: " + nomeRegiao, Toast.LENGTH_SHORT).show();
-
+        
+        // Mostra o carregamento na tela
+        if (layoutLoading != null) layoutLoading.setVisibility(View.VISIBLE);
+        
         // Passos em segundo plano para não travar a interface do usuário
         WebScraper.findPdfLink(urlAlvo, new WebScraper.ScraperCallback() {
             @Override
@@ -142,6 +150,9 @@ public class MainActivity extends AppCompatActivity {
                                     Toast.makeText(MainActivity.this, "Vagas filtradas! Abrindo WhatsApp...", Toast.LENGTH_SHORT).show();
                                     WhatsAppSender.enviarMensagem(MainActivity.this, vagasFiltradas.toString());
                                 }
+
+                                // Esconde o carregamento
+                                if (layoutLoading != null) layoutLoading.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -151,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
                             Log.e("AppVagas", "Erro no PDF para " + nomeRegiao + ": " + e.getMessage());
                             Toast.makeText(MainActivity.this, "Erro ao processar o arquivo PDF.", Toast.LENGTH_SHORT).show();
+                            if (layoutLoading != null) layoutLoading.setVisibility(View.GONE);
                         });
                     }
                 });
@@ -161,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     Log.e("AppVagas", "Erro no site para " + nomeRegiao + ": " + e.getMessage());
                     Toast.makeText(MainActivity.this, "Erro de conexão com o site da SEDEPE.", Toast.LENGTH_SHORT).show();
+                    if (layoutLoading != null) layoutLoading.setVisibility(View.GONE);
                 });
             }
         });
