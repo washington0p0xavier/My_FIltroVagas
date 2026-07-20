@@ -180,11 +180,47 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Card Águas Belas -->
+            <!-- Card Buíque -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFF">
+
+                <LinearLayout
+                    android:id="@+id/btnRegiaoBuique"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="20dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@android:drawable/ic_dialog_map"
+                        app:tint="#1A73E8"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Região Buíque"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="16dp"
+                        android:textColor="#202124"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card Águas Belas -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
                 android:clickable="true"
@@ -215,6 +251,18 @@
                         android:textColor="#202124"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Botão Limpar Histórico -->
+            <Button
+                android:id="@+id/btnLimparHistorico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Limpar Histórico de Vagas"
+                android:backgroundTint="#EA4335"
+                android:textColor="#FFFFFF"
+                android:layout_gravity="center"
+                android:layout_marginBottom="40dp"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"/>
 
         </LinearLayout>
     </ScrollView>
