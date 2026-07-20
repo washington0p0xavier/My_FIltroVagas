@@ -6,8 +6,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import androidx.appcompat.app.AppCompatActivity;
 
 // Importe a classe que criamos. Ajuste o caminho se necessário.
@@ -21,6 +24,8 @@ import com.controller.WebScraper;
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout layoutLoading;
+    private static final String PREFS_NAME = "vagas_prefs";
+    private static final String HISTORY_PREFIX = "vagas_history_";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         layoutLoading = findViewById(R.id.layoutLoading);
+
+        // Configuração do botão de limpeza de histórico
+        findViewById(R.id.btnLimparHistorico).setOnClickListener(v -> {
+            limparHistorico();
+        });
 
         // 1. Configura o clique do botão da Ala Garanhuns
         findViewById(R.id.btnRegiaoGaranhuns).setOnClickListener(v -> {
@@ -72,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
             executarAutomacao("Região Águas Belas", cidadesRegiaoAguaBelas);
         });
 
+        // 6. Configura o clique do botão da Região Buíque
+        findViewById(R.id.btnRegiaoBuique).setOnClickListener(v -> {
+            String[] cidadesRegiaoBuique = {
+                "BUÍQUE", "TUPANATINGA", "PEDRA", "ARCOVERDE", "VENTUROSA"
+            };
+            executarAutomacao("Região Buíque", cidadesRegiaoBuique);
+        });
+
         // Caso queira adicionar mais botões das outras regiões, basta seguir o mesmo padrão aqui embaixo
     }
 
@@ -98,15 +116,24 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                StringBuilder vagasFiltradas = new StringBuilder();
-                                vagasFiltradas.append("📌 *VAGAS DA AGÊNCIA DO TRABALHO — ").append(nomeRegiao.toUpperCase()).append("*\n\n");
+                                StringBuilder vagasParaWhatsApp = new StringBuilder();
+                                vagasParaWhatsApp.append("📌 *VAGAS DA AGÊNCIA DO TRABALHO — ").append(nomeRegiao.toUpperCase()).append("*\n\n");
 
-                                // Mapa para agrupar as vagas por cidade
-                                Map<String, StringBuilder> agrupamentoPorCidade = new LinkedHashMap<>();
+                                // Recupera o histórico de vagas já enviadas para esta região
+                                SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+                                String historyKey = HISTORY_PREFIX + nomeRegiao.replace(" ", "_");
+                                Set<String> historicoSet = prefs.getStringSet(historyKey, new HashSet<>());
+                                
+                                // Criamos um novo set para atualizar o histórico depois
+                                Set<String> novoHistoricoSet = new HashSet<>(historicoSet);
+                                
+                                // Mapa para agrupar as novas vagas por cidade
+                                Map<String, StringBuilder> agrupamentoNovasVagas = new LinkedHashMap<>();
 
                                 // Divide o texto do PDF linha por linha
                                 String[] linhas = rawText.split("\n");
-                                boolean encontrouVaga = false;
+                                boolean encontrouAlgumaVagaNoSite = false;
+                                boolean temNovaVagaParaEnviar = false;
 
                                 // Varre as linhas procurando as cidades dessa região específica
                                 for (String linha : linhas) {
@@ -118,37 +145,51 @@ public class MainActivity extends AppCompatActivity {
                                     for (String cidade : cidadesAlvo) {
                                         String cidadeMaiuscula = cidade.toUpperCase();
                                         if (linhaMaiuscula.contains(cidadeMaiuscula)) {
-
-                                            if (!agrupamentoPorCidade.containsKey(cidadeMaiuscula)) {
-                                                agrupamentoPorCidade.put(cidadeMaiuscula, new StringBuilder());
-                                            }
-
+                                            
                                             String vagaFormatada = formatarLinhaVaga(linhaLimpa, cidadeMaiuscula);
 
-                                            // Só adiciona se a linha realmente contiver uma vaga (não for uma linha fantasma)
+                                            // Só processa se a linha realmente contiver uma vaga
                                             if (!vagaFormatada.isEmpty()) {
-                                                agrupamentoPorCidade.get(cidadeMaiuscula).append(vagaFormatada).append("\n");
-                                                encontrouVaga = true;
+                                                encontrouAlgumaVagaNoSite = true;
+                                                
+                                                // Identificador único da vaga é a própria linha formatada
+                                                String idVaga = vagaFormatada.trim();
+
+                                                // SEMPRE adicionamos ao novo histórico para manter sincronizado com o site
+                                                novoHistoricoSet.add(idVaga);
+
+                                                // Só adicionamos na mensagem do WhatsApp se NÃO estiver no histórico antigo
+                                                if (!historicoSet.contains(idVaga)) {
+                                                    if (!agrupamentoNovasVagas.containsKey(cidadeMaiuscula)) {
+                                                        agrupamentoNovasVagas.put(cidadeMaiuscula, new StringBuilder());
+                                                    }
+                                                    agrupamentoNovasVagas.get(cidadeMaiuscula).append(vagaFormatada).append("\n");
+                                                    temNovaVagaParaEnviar = true;
+                                                }
                                             }
                                             break;
                                         }
                                     }
                                 }
 
-                                // Monta a mensagem final agrupada
-                                if (encontrouVaga) {
-                                    for (Map.Entry<String, StringBuilder> entry : agrupamentoPorCidade.entrySet()) {
-                                        vagasFiltradas.append("💼 *VAGAS EM ").append(entry.getKey()).append("*\n\n");
-                                        vagasFiltradas.append(entry.getValue().toString()).append("\n");
-                                    }
-                                }
+                                // Salva o histórico atualizado (vagas que existem no site agora)
+                                prefs.edit().putStringSet(historyKey, novoHistoricoSet).apply();
 
-                                // Verifica se encontramos resultados para gerar o disparo
-                                if (!encontrouVaga) {
-                                    Toast.makeText(MainActivity.this, "Nenhuma vaga encontrada para " + nomeRegiao, Toast.LENGTH_LONG).show();
+                                // Monta a mensagem final com as novidades
+                                if (temNovaVagaParaEnviar) {
+                                    for (Map.Entry<String, StringBuilder> entry : agrupamentoNovasVagas.entrySet()) {
+                                        vagasParaWhatsApp.append("💼 *VAGAS EM ").append(entry.getKey()).append("*\n\n");
+                                        vagasParaWhatsApp.append(entry.getValue().toString()).append("\n");
+                                    }
+                                    
+                                    Toast.makeText(MainActivity.this, "Novas vagas encontradas! Abrindo WhatsApp...", Toast.LENGTH_SHORT).show();
+                                    WhatsAppSender.enviarMensagem(MainActivity.this, vagasParaWhatsApp.toString());
                                 } else {
-                                    Toast.makeText(MainActivity.this, "Vagas filtradas! Abrindo WhatsApp...", Toast.LENGTH_SHORT).show();
-                                    WhatsAppSender.enviarMensagem(MainActivity.this, vagasFiltradas.toString());
+                                    if (!encontrouAlgumaVagaNoSite) {
+                                        Toast.makeText(MainActivity.this, "Nenhuma vaga disponível no site para " + nomeRegiao, Toast.LENGTH_LONG).show();
+                                    } else {
+                                        Toast.makeText(MainActivity.this, "Nenhuma vaga NOVA para " + nomeRegiao + ". (Você já viu todas)", Toast.LENGTH_LONG).show();
+                                    }
                                 }
 
                                 // Esconde o carregamento
@@ -257,5 +298,11 @@ public class MainActivity extends AppCompatActivity {
             if (words[i].matches("\\d+")) return words[i];
         }
         return "";
+    }
+
+    private void limparHistorico() {
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        prefs.edit().clear().apply();
+        Toast.makeText(this, "Memória limpa! Todas as vagas serão enviadas na próxima busca.", Toast.LENGTH_LONG).show();
     }
 }
