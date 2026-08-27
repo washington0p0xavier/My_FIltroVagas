@@ -1,0 +1,1 @@
+Projeto desenvolvido com o intuito de facilitar a indentificação de vagas de emprego disponibilizadas no site da Secretaria de Desenvolvimento Profissional e Empreendedorismo de Pernambuco(SEDEPE), separar por regiões e mandar em grupos de WhatsApp. Com o proposito de minimizar o tempo de procura e envio.
